@@ -59,6 +59,7 @@ const HeroForm: React.FC<HeroFormProps> = ({ hero, powers, onSave }) => {
         label="Name"
         defaultValue={hero?.name}
         type="text"
+        data-cy="nameInput"
         errorMessage={formState.errors.name?.message as string}
         {...register('name', {
           required: 'Name is required',
@@ -69,6 +70,7 @@ const HeroForm: React.FC<HeroFormProps> = ({ hero, powers, onSave }) => {
         label="Price"
         defaultValue={hero?.price}
         type="number"
+        data-cy="priceInput"
         errorMessage={formState.errors.price?.message as string}
         {...register('price', {
           required: 'Price is required',
@@ -79,6 +81,7 @@ const HeroForm: React.FC<HeroFormProps> = ({ hero, powers, onSave }) => {
         label="Fans"
         defaultValue={hero?.fans}
         type="number"
+        data-cy="fansInput"
         errorMessage={formState.errors.fans?.message as string}
         {...register('fans', {
           required: 'Fans is required',
@@ -89,6 +92,7 @@ const HeroForm: React.FC<HeroFormProps> = ({ hero, powers, onSave }) => {
         label="Saves"
         defaultValue={hero?.saves}
         type="number"
+        data-cy="savesInput"
         errorMessage={formState.errors.saves?.message as string}
         {...register('saves', {
           required: 'Saves is required',
@@ -101,6 +105,7 @@ const HeroForm: React.FC<HeroFormProps> = ({ hero, powers, onSave }) => {
         label="Powers"
         multiple
         size={6}
+        data-cy="powersSelect"
         errorMessage={formState.errors.powers?.message as string}
         {...register('powers', {
           required: 'Powers is required',
