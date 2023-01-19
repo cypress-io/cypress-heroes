@@ -1,0 +1,38 @@
+name: Cypress Tests
+
+on: [push]
+
+env:
+  VITE_API_URL: http://localhost:3001
+
+jobs:
+  build-and-run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install dependencies & Build
+        uses: cypress-io/github-action@v5.0.5
+        with:
+          # just build and perform install
+          build: npm run build
+          runTests: false
+      - name: CT Tests
+        uses: cypress-io/github-action@v5.0.5 # use the explicit version number
+        with:
+          install: false
+          command: npm run test:ct
+      - name: Start Client & Server
+        run: npm run start:ci &
+      - name: E2E Tests
+        uses: cypress-io/github-action@v5.0.5 # use the explicit version number
+        with:
+          install: false
+          command: npm run test:e2e
+          wait-on: 'http://localhost:3000, http://localhost:3001/heroes'      
+      - name: API Tests
+        uses: cypress-io/github-action@v5.0.5 # use the explicit version number
+        with:
+          install: false
+          command: npm run test:api
+          wait-on: 'http://localhost:3001/heroes'

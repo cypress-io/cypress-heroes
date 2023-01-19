@@ -1,0 +1,34 @@
+{
+  "name": "cypress-heroes",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "prebuild": "rimraf ./client-react/dist && rimraf ./server/dist",
+    "build": "npm run build:client-react && npm run build:server",
+    "build:client-react": "npm --prefix ./client-react run build",
+    "build:server": "npm --prefix ./server run build",
+    "postinstall": "npm --prefix ./client-react install && npm --prefix ./server install",
+    "start:ci": "concurrently \"npm run start:ci:client-react\" \"npm run start:ci:server\"",
+    "start:ci:client-react": "npm --prefix ./client-react run preview",
+    "start:ci:server": "npm --prefix ./server run prisma:resetdb && npm --prefix ./server run start",
+    "test:e2e": "npm --prefix ./client-react run test:e2e",
+    "test:ct": "npm --prefix ./client-react run test:ct",
+    "test:api": "npm --prefix ./server run test:api"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elylucas/cypress-heroes.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/elylucas/cypress-heroes/issues"
+  },
+  "homepage": "https://github.com/elylucas/cypress-heroes#readme",
+  "devDependencies": {
+    "concurrently": "^7.6.0",
+    "cypress": "^12.3.0",
+    "rimraf": "^4.1.0"
+  }
+}

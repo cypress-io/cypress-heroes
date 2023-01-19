@@ -1,0 +1,15 @@
+.modal-container {
+  transition: all ease-in 100ms;
+
+  &.open {
+    @apply bg-gray-600 bg-opacity-50;
+  }
+}
+
+.modal {
+  transition: all ease-in 100ms;
+  top: -300px;
+  &.open {
+    top: -10%;
+  }
+}
