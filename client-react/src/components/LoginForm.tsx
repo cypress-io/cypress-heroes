@@ -38,7 +38,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
       <form noValidate className="flex flex-col gap-4" onSubmit={handleSubmit}>
         <InputField
           label="Email"
-          data-testid="username"
+          data-cy="email"
           expand="full"
           type="email"
           errorMessage={formState.errors.email?.message as string}
@@ -53,7 +53,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
 
         <InputField
           label="Password"
-          data-testid="password"
+          data-cy="password"
           expand="full"
           type="password"
           errorMessage={formState.errors.password?.message as string}

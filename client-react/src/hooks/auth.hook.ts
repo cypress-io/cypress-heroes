@@ -35,7 +35,7 @@ export function useAuth() {
           }),
         });
         if (response.status === 401) {
-          setAuthError('Invalid username or password');
+          setAuthError('Invalid email or password');
           return;
         }
         const authResult = (await response.json()) as AuthResult;
