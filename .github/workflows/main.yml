@@ -4,6 +4,8 @@ on: [push]
 
 env:
   VITE_API_URL: http://localhost:3001
+  CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   build-and-run-tests:
@@ -22,6 +24,7 @@ jobs:
         with:
           install: false
           command: npm run test:ct
+          record: true
       - name: Start Client & Server
         run: npm run start:ci &
       - name: E2E Tests
@@ -29,6 +32,7 @@ jobs:
         with:
           install: false
           command: npm run test:e2e
+          record: true
           wait-on: 'http://localhost:3000, http://localhost:3001/heroes'      
       - name: API Tests
         uses: cypress-io/github-action@v5.0.5 # use the explicit version number
