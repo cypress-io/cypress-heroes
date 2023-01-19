@@ -12,9 +12,9 @@
     "start:ci": "concurrently \"npm run start:ci:client-react\" \"npm run start:ci:server\"",
     "start:ci:client-react": "npm --prefix ./client-react run preview",
     "start:ci:server": "npm --prefix ./server run prisma:resetdb && npm --prefix ./server run start",
-    "test:e2e": "npm --prefix ./client-react run test:e2e",
-    "test:ct": "npm --prefix ./client-react run test:ct",
-    "test:api": "npm --prefix ./server run test:api"
+    "test:e2e:ci": "npm --prefix ./client-react run test:e2e:ci",
+    "test:ct:ci": "npm --prefix ./client-react run test:ct:ci",
+    "test:api:ci": "npm --prefix ./server run test:api"
   },
   "repository": {
     "type": "git",

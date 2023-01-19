@@ -23,7 +23,7 @@ jobs:
         uses: cypress-io/github-action@v5.0.5 # use the explicit version number
         with:
           install: false
-          command: npm run test:ct
+          command: npm run test:ct:ci
           record: true
       - name: Start Client & Server
         run: npm run start:ci &
@@ -31,12 +31,12 @@ jobs:
         uses: cypress-io/github-action@v5.0.5 # use the explicit version number
         with:
           install: false
-          command: npm run test:e2e
+          command: npm run test:e2e:ci
           record: true
           wait-on: 'http://localhost:3000, http://localhost:3001/heroes'      
       - name: API Tests
         uses: cypress-io/github-action@v5.0.5 # use the explicit version number
         with:
           install: false
-          command: npm run test:api
+          command: npm run test:api:ci
           wait-on: 'http://localhost:3001/heroes'

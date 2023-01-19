@@ -7,8 +7,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "test:e2e": "npx cypress run",
-    "test:ct": "npx cypress run --component"
+    "test:e2e:ci": "npx cypress run --record",
+    "test:ct:ci": "npx cypress run --component --record"
   },
   "dependencies": {
     "@tanstack/react-query": "^4.22.0",
