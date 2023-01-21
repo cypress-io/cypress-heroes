@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
+    "test:e2e:ui": "npx cypress open",
     "test:e2e:ci": "npx cypress run --record",
     "test:ct:ci": "npx cypress run --component --record"
   },
