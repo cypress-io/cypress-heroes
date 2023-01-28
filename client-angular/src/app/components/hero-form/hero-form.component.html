@@ -1,0 +1,101 @@
+<form
+  [formGroup]="heroForm"
+  (ngSubmit)="onSubmit()"
+  #ngForm="ngForm"
+  class="flex flex-col gap-4"
+>
+  <app-input-field label="Name">
+    <input app-text-input type="text" formControlName="name" required />
+    <div
+      validation-errors
+      *ngIf="ngForm.submitted && heroForm.controls.name.errors?.['required']"
+    >
+      Name is required.
+    </div>
+  </app-input-field>
+
+  <app-input-field label="Price">
+    <input app-text-input type="number" formControlName="price" required />
+    <div validation-errors>
+      <div
+        *ngIf="ngForm.submitted && heroForm.controls.price.errors?.['required']"
+      >
+        Price is required.
+      </div>
+      <div *ngIf="ngForm.submitted && heroForm.controls.price.errors?.['min']">
+        Price must be greater than 0.
+      </div>
+    </div>
+  </app-input-field>
+
+  <app-input-field label="Fans">
+    <input app-text-input type="number" formControlName="fans" required />
+    <div validation-errors>
+      <div
+        *ngIf="ngForm.submitted && heroForm.controls.fans.errors?.['required']"
+      >
+        Fans is required.
+      </div>
+      <div *ngIf="ngForm.submitted && heroForm.controls.fans.errors?.['min']">
+        Fans must be greater than 0.
+      </div>
+    </div>
+  </app-input-field>
+
+  <app-input-field label="Saves">
+    <input app-text-input type="number" formControlName="saves" required />
+    <div validation-errors>
+      <div
+        *ngIf="ngForm.submitted && heroForm.controls.saves.errors?.['required']"
+      >
+        Saves is required.
+      </div>
+      <div *ngIf="ngForm.submitted && heroForm.controls.saves.errors?.['min']">
+        Saves must be greater than 0.
+      </div>
+    </div>
+  </app-input-field>
+
+  <app-input-field label="Powers">
+    <select
+      app-text-input
+      formControlName="powers"
+      multiple
+      size="6"
+      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-1/3 p-2.5"
+    >
+      <option *ngFor="let power of powers" [ngValue]="power.id">
+        {{ power.name }}
+      </option>
+    </select>
+    <div
+      validation-errors
+      *ngIf="ngForm.submitted && heroForm.controls.powers.errors?.['required']"
+    >
+      At least one power is required.
+    </div>
+  </app-input-field>
+
+  <app-input-field label="Avatar">
+    <div app-text-input class="border border-dashed border-gray-500 relative block max-w-sm">
+      <input
+        accept="image/*"
+        type="file"
+        id="avatar"
+        class="cursor-pointer absolute block opacity-0 top-0 right-0 left-0 z-50 w-full h-full"
+        #fileInput
+        (change)="onFileChange(fileInput!.files![0])"
+      />
+      <div *ngIf="!imageUrl" class="text-center p-10 w-full h-full">
+        <h4>
+          Drop image here
+          <br />or
+        </h4>
+        <p class="">Select files</p>
+      </div>
+      <img *ngIf="imageUrl" src="{{ imageUrl }}" />
+    </div>
+  </app-input-field>
+
+  <app-button>Submit</app-button>
+</form>

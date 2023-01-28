@@ -1,0 +1,53 @@
+<div class="flex flex-col gap-4 w-[380px]">
+  <h5 class="text-xl">Login</h5>
+  <form
+    [formGroup]="loginForm"
+    (ngSubmit)="onSubmit()"
+    #ngForm="ngForm"
+    class="flex flex-col gap-4"
+  >
+    <app-input-field label="Email">
+      <input
+        app-text-input
+        expand="full"
+        type="email"
+        formControlName="email"
+        required
+      />
+      <div validation-errors>
+        <div
+          *ngIf="ngForm.submitted && loginForm.controls.email.errors?.['required']"
+        >
+          Email is required.
+        </div>
+        <div
+          *ngIf="ngForm.submitted && loginForm.controls.email.errors?.['email']"
+        >
+          Email must be a valid email address.
+        </div>
+      </div>
+    </app-input-field>
+
+    <app-input-field label="Password">
+      <input
+        app-text-input
+        expand="full"
+        type="password"
+        formControlName="password"
+        required
+      />
+      <div
+        validation-errors
+        *ngIf="ngForm.submitted && loginForm.controls.password.errors?.['required']"
+      >
+        Password is required.
+      </div>
+    </app-input-field>
+
+    <div *ngIf="errorMessage" validation-errors>
+      {{ errorMessage }}
+    </div>
+
+    <app-button expand="full">Sign in</app-button>
+  </form>
+</div>

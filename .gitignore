@@ -27,6 +27,9 @@ videos
 *.sln
 *.sw?
 
+# Angular
+.angular
+
 # IDE - VSCode
 .vscode/*
 !.vscode/settings.json

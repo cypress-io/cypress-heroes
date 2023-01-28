@@ -1,0 +1,49 @@
+<div
+  class="flex flex-col w-full rounded-lg border shadow-md bg-gray-50 mt-8 relative"
+  *ngIf="$heroData | async as heroData; else loading"
+>
+  <div class="mx-auto">
+    <app-avatar [hero]="heroData.hero" class="flex justify-center -mt-8"></app-avatar>
+    <h3 class="text-4xl font-semibold leading-normal text-slate-700 mb-2">
+      {{ heroData.hero.name }}
+    </h3>
+  </div>
+
+  <div class="flex absolute top-4 left-4 justify-center gap-4">
+    <div class="mr-4 text-center">
+      <span
+        class="text-xl font-bold block uppercase tracking-wide text-slate-600"
+        >{{ heroData.hero.fans | shortNumber }}</span
+      ><span class="text-sm text-slate-400">Fans</span>
+    </div>
+    <div class="mr-4 text-center">
+      <span
+        class="text-xl font-bold block uppercase tracking-wide text-slate-600"
+        >{{ heroData.hero.saves | shortNumber }}</span
+      ><span class="text-sm text-slate-400">Saves</span>
+    </div>
+    <div class="text-center">
+      <span
+        class="text-xl font-bold block uppercase tracking-wide text-slate-600"
+        >${{ heroData.hero.price | shortNumber }}</span
+      ><span class="text-sm text-slate-400">Price</span>
+    </div>
+  </div>
+
+  <div class="flex flex-wrap justify-center absolute top-4 right-4">
+    <div class="w-full">
+        <button
+          class="bg-red-600 active:bg-red-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150"
+          type="button"
+          (click)="deleteHero(heroData.hero)"
+        >
+          Delete Hero
+        </button>
+    </div>
+  </div>
+
+  <div class="px-8 py-4">
+    <app-hero-form [hero]="heroData.hero" [powers]="heroData.powers" (onSave)="updateHero($event)"></app-hero-form>
+  </div>
+</div>
+<ng-template #loading> Loading... </ng-template>

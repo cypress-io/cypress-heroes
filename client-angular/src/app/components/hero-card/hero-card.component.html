@@ -1,0 +1,58 @@
+<app-card>
+  <app-avatar class="-mt-8" [hero]="hero"></app-avatar>
+  <div class="flex justify-center">
+    <div class="p-2 text-center">
+      <span
+        class="text-xl font-bold block uppercase tracking-wide text-slate-700"
+        >${{ hero.price | shortNumber }}</span
+      >
+      <span class="text-sm text-slate-400">Price</span>
+    </div>
+    <div class="p-2 text-center">
+      <span
+        class="text-xl font-bold block uppercase tracking-wide text-slate-700"
+        >{{ hero.fans | shortNumber }}</span
+      >
+      <span class="text-sm text-slate-400">Fans</span>
+    </div>
+    <div class="p-2 text-center">
+      <span
+        class="text-xl font-bold block uppercase tracking-wide text-slate-700"
+        >{{ hero.saves | shortNumber }}</span
+      >
+      <span class="text-sm text-slate-400">Saves</span>
+    </div>
+  </div>
+  <h5 class="mb-1 text-xl font-medium text-gray-500">
+    {{ hero.name }}
+  </h5>
+  <div class="flex flex-col text-sm items-center text-gray-400 h-[40px]">
+    <ul class="flex gap-2">
+      <ng-container *ngFor="let power of hero.powers; index as i">
+        <li *ngIf="i < 2">
+          {{ power.name }}{{ i === 0 && hero.powers.length > 1 ? "," : "" }}
+        </li>
+      </ng-container>
+    </ul>
+    <ul
+      class="flex items-center gap-2 text-sm text-gray-400"
+      *ngIf="hero.powers.length > 2"
+    >
+      <li>+ {{ hero.powers.length - 2 }} more</li>
+    </ul>
+  </div>
+
+  <div *ngIf="!hideButtons" class="flex flex-col mt-2 gap-2 mb-8">
+    <div class="flex gap-2">
+      <app-icon-button icon="like" (click)="likeHero()"></app-icon-button>
+      <app-icon-button icon="money" (click)="hireHero()"></app-icon-button>
+    </div>
+    <div *ngIf="user?.isAdmin" class="flex gap-2">
+      <app-icon-button
+        icon="pencil"
+        routerLink="/heroes/{{ hero.id }}/edit"
+      ></app-icon-button>
+      <app-icon-button icon="trash" (click)="deleteHero()"></app-icon-button>
+    </div>
+  </div>
+</app-card>
