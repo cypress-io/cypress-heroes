@@ -18,12 +18,12 @@
         <div
           *ngIf="ngForm.submitted && loginForm.controls.email.errors?.['required']"
         >
-          Email is required.
+          Email is required
         </div>
         <div
           *ngIf="ngForm.submitted && loginForm.controls.email.errors?.['email']"
         >
-          Email must be a valid email address.
+          Email is not valid
         </div>
       </div>
     </app-input-field>
@@ -40,7 +40,7 @@
         validation-errors
         *ngIf="ngForm.submitted && loginForm.controls.password.errors?.['required']"
       >
-        Password is required.
+        Password is required
       </div>
     </app-input-field>
 

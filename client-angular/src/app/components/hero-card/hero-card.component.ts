@@ -10,6 +10,7 @@ export class HeroCardComponent implements OnInit {
   @Input() user?: User;
   @Input() hideButtons: boolean = false;
   @Output() onDeleteHero = new EventEmitter<Hero>();
+  @Output() onEditHero = new EventEmitter<Hero>();
   @Output() onHireHero = new EventEmitter<Hero>();
   @Output() onLikeHero = new EventEmitter<Hero>();
 
@@ -27,5 +28,9 @@ export class HeroCardComponent implements OnInit {
 
   deleteHero() {
     this.onDeleteHero.emit(this.hero);
+  }
+
+  editHero() {
+    this.onEditHero.emit(this.hero);
   }
 }

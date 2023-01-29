@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { AlertModalComponent } from './alert-modal/alert-modal.component';
 import { AvatarComponent } from './avatar/avatar.component';
 import { ButtonComponent } from './button/button.component';
-import { CardComponent } from './card/card.component';
 import { ConfirmDeleteModalComponent } from './confirm-delete-modal/confirm-delete-modal.component';
 import { ConfirmHireModalComponent } from './confirm-hire-modal/confirm-hire-modal.component';
 import { HeroCardComponent } from './hero-card/hero-card.component';
@@ -16,10 +15,12 @@ import { ShortNumberPipe } from '../utils/short-number.pipe';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from '../app-routing.module';
-import { TextInputComponent, ValidationErrorsComponent } from './text-input/text-input.component';
+import {
+  TextInputComponent,
+  ValidationErrorsComponent,
+} from './text-input/text-input.component';
 import { InputFieldComponent } from './input-field/input-field.component';
 import { LoginFormComponent } from './login-form/login-form.component';
-
 
 @NgModule({
   declarations: [
@@ -36,7 +37,6 @@ import { LoginFormComponent } from './login-form/login-form.component';
     LoginModalComponent,
     ModalComponent,
     ModalContainerComponent,
-    CardComponent,
     TextInputComponent,
     ValidationErrorsComponent,
     InputFieldComponent,
@@ -61,7 +61,6 @@ import { LoginFormComponent } from './login-form/login-form.component';
     LoginFormComponent,
     ModalComponent,
     ModalContainerComponent,
-    CardComponent
-  ]
+  ],
 })
 export class ComponentsModule {}

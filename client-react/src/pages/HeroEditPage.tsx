@@ -46,7 +46,10 @@ const HeroEditPage: React.FC<HeroEditPageProps> = () => {
     <div className="flex flex-col w-full rounded-lg border shadow-md bg-gray-50 mt-8 relative">
       <div className="mx-auto">
         <Avatar hero={hero} className="flex justify-center -mt-8"></Avatar>
-        <h3 data-cy="name" className="text-4xl font-semibold leading-normal text-slate-700 mb-2">
+        <h3
+          data-cy="name"
+          className="text-4xl font-semibold leading-normal text-slate-700 mb-2"
+        >
           {hero.name}
         </h3>
       </div>

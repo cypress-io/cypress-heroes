@@ -1,5 +1,5 @@
-import { Hero, User } from '../models';
-import HeroCard from './HeroCard';
+import { createOutputSpy } from 'cypress/angular';
+import { Hero, User } from '../../services/models';
 
 describe('HeroCard', () => {
   let hero: Hero;
@@ -26,11 +26,19 @@ describe('HeroCard', () => {
   });
 
   it('mounts', () => {
-    cy.mount(<HeroCard hero={hero} />);
+    cy.mount('<li hero-card [hero]="hero"></li>', {
+      componentProperties: {
+        hero,
+      },
+    });
   });
 
   it('should contain hero information', () => {
-    cy.mount(<HeroCard hero={hero} />);
+    cy.mount('<li hero-card [hero]="hero"></li>', {
+      componentProperties: {
+        hero,
+      },
+    });
     cy.get('[data-cy=price]').should('contain.text', `$${hero.price}`);
     cy.get('[data-cy=fans]').should('contain.text', hero.fans);
     cy.get('[data-cy=saves]').should('contain.text', hero.saves);
@@ -41,7 +49,11 @@ describe('HeroCard', () => {
   });
 
   it('when hero has 2 or less powers, should NOT contain more text', () => {
-    cy.mount(<HeroCard hero={hero} />);
+    cy.mount('<li hero-card [hero]="hero"></li>', {
+      componentProperties: {
+        hero,
+      },
+    });
     cy.get('[data-cy=more]').should('not.exist');
   });
 
@@ -50,24 +62,48 @@ describe('HeroCard', () => {
       id: 3,
       name: 'Test Power 3',
     });
-    cy.mount(<HeroCard hero={hero} />);
+    cy.mount('<li hero-card [hero]="hero"></li>', {
+      componentProperties: {
+        hero,
+      },
+    });
     cy.get('[data-cy=more]').should('contain.text', '+1 more');
   });
 
   it('clicking like button should call onLikeHero', () => {
-    cy.mount(<HeroCard hero={hero} onLikeHero={cy.spy().as('onLikeHero')} />);
+    cy.mount(
+      '<li hero-card [hero]="hero" (onLikeHero)="onLikeHero.emit($event)"></li>',
+      {
+        componentProperties: {
+          hero,
+          onLikeHero: createOutputSpy('onLikeHero'),
+        },
+      }
+    );
     cy.get('[data-cy=like]').click();
     cy.get('@onLikeHero').should('have.been.calledWith', hero);
   });
 
   it('clicking hire button should call onHireHero', () => {
-    cy.mount(<HeroCard hero={hero} onHireHero={cy.spy().as('onHireHero')} />);
+    cy.mount(
+      '<li hero-card [hero]="hero" (onHireHero)="onHireHero.emit($event)"></li>',
+      {
+        componentProperties: {
+          hero,
+          onHireHero: createOutputSpy('onHireHero'),
+        },
+      }
+    );
     cy.get('[data-cy=money]').click();
     cy.get('@onHireHero').should('have.been.calledWith', hero);
   });
 
   it('when no user is logged in, edit and delete buttons should NOT exist', () => {
-    cy.mount(<HeroCard hero={hero} />);
+    cy.mount('<li hero-card [hero]="hero"></li>', {
+      componentProperties: {
+        hero,
+      },
+    });
     cy.get('[data-cy=pencil]').should('not.exist');
     cy.get('[data-cy=trash]').should('not.exist');
   });
@@ -84,7 +120,12 @@ describe('HeroCard', () => {
     });
 
     it('when normal user is logged in, edit and delete buttons should NOT exist', () => {
-      cy.mount(<HeroCard hero={hero} user={user} />);
+      cy.mount('<li hero-card [hero]="hero" [user]="user"></li>', {
+        componentProperties: {
+          hero,
+          user,
+        },
+      });
       cy.get('[data-cy=pencil]').should('not.exist');
       cy.get('[data-cy=trash]').should('not.exist');
     });
@@ -103,11 +144,14 @@ describe('HeroCard', () => {
 
     it('clicking delete button should call onDeleteHero', () => {
       cy.mount(
-        <HeroCard
-          hero={hero}
-          user={user}
-          onDeleteHero={cy.spy().as('onDeleteHero')}
-        />
+        '<li hero-card [hero]="hero" [user]="user" (onDeleteHero)="onDeleteHero.emit($event)"></li>',
+        {
+          componentProperties: {
+            hero,
+            user,
+            onDeleteHero: createOutputSpy('onDeleteHero'),
+          },
+        }
       );
       cy.get('[data-cy=trash]').click();
       cy.get('@onDeleteHero').should('have.been.calledWith', hero);
@@ -115,11 +159,14 @@ describe('HeroCard', () => {
 
     it('clicking edit button should call onEditHero', () => {
       cy.mount(
-        <HeroCard
-          hero={hero}
-          user={user}
-          onEditHero={cy.spy().as('onEditHero')}
-        />
+        '<li hero-card [hero]="hero" [user]="user" (onEditHero)="onEditHero.emit($event)"></li>',
+        {
+          componentProperties: {
+            hero,
+            user,
+            onEditHero: createOutputSpy('onEditHero'),
+          },
+        }
       );
       cy.get('[data-cy=pencil]').click();
       cy.get('@onEditHero').should('have.been.calledWith', hero);

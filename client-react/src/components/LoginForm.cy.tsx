@@ -41,7 +41,7 @@ describe('LoginForm', () => {
     );
 
     cy.mount(<LoginForm onLogin={cy.spy().as('onLoginSpy')} />);
-    cy.get('input[type="email"]').type('test@user.com');
+    cy.get('input[type="email"]').type('good@email.com');
     cy.get('input[type="password"]').type('pass123');
     cy.get('button').click();
     cy.get('@onLoginSpy').should('have.been.called');
@@ -59,7 +59,7 @@ describe('LoginForm', () => {
     );
 
     cy.mount(<LoginForm onLogin={cy.spy().as('onLoginSpy')} />);
-    cy.get('input[type="email"]').type('test@user.com');
+    cy.get('input[type="email"]').type('bad@email.com');
     cy.get('input[type="password"]').type('pass123');
     cy.get('button').click();
     cy.contains('Invalid email or password');

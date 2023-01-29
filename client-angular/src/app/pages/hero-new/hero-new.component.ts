@@ -4,6 +4,7 @@ import { HeroEditModel, Power } from '../../services/models';
 import { HeroService } from '../../services/hero.service';
 import { PowerService } from '../../services/power.service';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-hero-new',
@@ -27,14 +28,14 @@ export class HeroNewComponent implements OnInit {
   constructor(
     private heroService: HeroService,
     private powerService: PowerService,
-    private location: Location
+    private router: Router
   ) {}
 
   $powers!: Observable<Power[]>;
 
   async createHero({ hero, file }: { hero: HeroEditModel; file?: File }) {
     this.heroService.addHero(hero, file).subscribe(() => {
-      this.location.back();
+      this.router.navigateByUrl('/');
     });
   }
 

@@ -7,6 +7,7 @@ import { AuthService } from '../../../app/services/auth.service';
 import { Observable } from 'rxjs';
 import { ConfirmHireModalComponent } from '../../../app/components/confirm-hire-modal/confirm-hire-modal.component';
 import { AlertModalComponent } from '../../../app/components/alert-modal/alert-modal.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-hero-list',
@@ -14,11 +15,13 @@ import { AlertModalComponent } from '../../../app/components/alert-modal/alert-m
     <ul class="flex flex-wrap gap-8 justify-center">
       <li
         hero-card
+        data-cy="hero-card"
         *ngFor="let hero of $heroes | async; trackBy: trackHeroRow"
         [hero]="hero"
         (onDeleteHero)="deleteHero($event)"
         (onHireHero)="hireHero($event)"
         (onLikeHero)="likeHero($event)"
+        (onEditHero)="editHero($event)"
         [user]="user"
         class="mt-8"
       ></li>
@@ -32,7 +35,8 @@ export class HeroListComponent implements OnInit {
   constructor(
     private heroService: HeroService,
     private authService: AuthService,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -90,6 +94,10 @@ export class HeroListComponent implements OnInit {
         });
       },
     });
+  }
+
+  editHero(hero: Hero) {
+    this.router.navigateByUrl(`/heroes/${ hero.id }/edit`);
   }
 
   trackHeroRow(_index: number, hero: Hero) {
