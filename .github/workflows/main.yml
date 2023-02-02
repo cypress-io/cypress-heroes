@@ -23,6 +23,7 @@ jobs:
         uses: cypress-io/github-action@8c6e383f5b77f5af6f80d69f45e6016cf9f519c0 # use the explicit version number
         with:
           install: false
+          component: true
           # command: npm run test:ct:ci:client-react
           record: true
           auto-cancel-after-failures: 2
