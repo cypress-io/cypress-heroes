@@ -28,6 +28,7 @@ jobs:
           record: true
           auto-cancel-after-failures: 2
           working-directory: ./client-react
+          command-prefix: 'ls -- npx'
       - name: Start Client & Server
         run: npm run start:ci:react &
       - name: E2E Tests
