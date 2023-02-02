@@ -22,7 +22,7 @@ jobs:
       - name: CT Tests
         uses: cypress-io/github-action@b80418579b5d0736b8d0f81c524800dc46a62942 # use the explicit version number
         env:
-        DEBUG: '@cypress/github-action'
+          DEBUG: '@cypress/github-action'
         with:
           install: false
           component: true
