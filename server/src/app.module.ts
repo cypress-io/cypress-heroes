@@ -11,9 +11,18 @@ import { UsersModule } from './users/users.module';
 import { AuthGuard } from './auth/auth.guard';
 import { EntityNotFoundFilter } from './utils/entity-not-found.filter';
 import { TransformerInterceptor } from './utils/transformer.interceptor';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
-  imports: [AuthModule, UsersModule],
+  imports: [
+    AuthModule,
+    UsersModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'client'),
+      serveRoot: '/client',
+    }),
+  ],
   controllers: [HeroesController, PowersController],
   providers: [
     HeroesService,

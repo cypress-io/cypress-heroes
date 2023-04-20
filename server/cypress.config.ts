@@ -5,7 +5,7 @@ export default defineConfig({
   e2e: {
     testIsolation: false, //disable to see api results screen
     specPattern: 'cypress/**/*.cy.{js,jsx,ts,tsx}',
-    baseUrl: 'http://localhost:3001',
+    baseUrl: 'http://localhost:3101',
     setupNodeEvents(on, config) {
       on('task', {
         createHero,

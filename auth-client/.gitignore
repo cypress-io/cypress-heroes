@@ -10,16 +10,11 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
-.env.local
-*/prisma/data
-server/client
-
-# Tests
-coverage
-.nyc_output
-videos
+*.local
 
 # Editor directories and files
+.vscode/*
+!.vscode/extensions.json
 .idea
 .DS_Store
 *.suo
@@ -27,13 +22,3 @@ videos
 *.njsproj
 *.sln
 *.sw?
-
-# IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-
-# OS
-.DS_Store
