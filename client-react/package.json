@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "rimraf dist",
     "build": "tsc && vite build",
-    "preview": "vite preview",
-    "test:e2e:ci": "npx cypress run --record",
-    "test:ct:ci": "npx cypress run --component --record"
+    "preview": "vite preview --host",
+    "test:e2e:ci": "npx cypress run --record --group e2e --parallel",
+    "test:ct:ci": "npx cypress run --component --record --group ct --parallel"
   },
   "dependencies": {
     "@tanstack/react-query": "^4.22.0",

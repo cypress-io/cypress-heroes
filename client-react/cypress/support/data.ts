@@ -1,7 +1,7 @@
 import {
   Prisma,
   PrismaClient,
-} from '../../../server/node_modules/@prisma/client';
+} from '@prisma/client';
 
 const client = new PrismaClient();
 

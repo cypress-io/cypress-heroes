@@ -1,5 +1,5 @@
-import { Prisma } from '../support/models';
-
+export { };
+  
 describe('hero new page', () => {
   beforeEach(() => {
     //intercept the request so we can get the new hero's id to delete it later
