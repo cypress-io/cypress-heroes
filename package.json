@@ -4,15 +4,15 @@
   "description": "",
   "main": "index.js",
   "workspaces": [
-    "client-react",
+    "client",
     "server"
   ],
   "scripts": {
-    "build": "npm --prefix ./client-react run build && npm --prefix ./server run build",
-    "start:ci": "concurrently \"npm --prefix ./client-react run preview\" \"npm --prefix ./server run start:ci\"",
-    "test:e2e:ci": "npm --prefix ./client-react run test:e2e:ci",
+    "build": "npm --prefix ./client run build && npm --prefix ./server run build",
+    "start:ci": "concurrently \"npm --prefix ./client run preview\" \"npm --prefix ./server run start:ci\"",
+    "test:e2e:ci": "npm --prefix ./client run test:e2e:ci",
     "test:api:ci": "npm --prefix ./server run test:api:ci",
-    "test:ct:ci": "npm --prefix ./client-react run test:ct:ci"
+    "test:ct:ci": "npm --prefix ./client run test:ct:ci"
   },
   "repository": {
     "type": "git",
