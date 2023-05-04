@@ -1,4 +1,4 @@
-import { Prisma } from '../support/models';
+import Prisma from '@prisma/client';
 
 describe('home page', () => {
   beforeEach(() => {
@@ -121,9 +121,7 @@ describe('home page', () => {
             cy.wrap(el.text()).as('fanCount');
           });
         //click like button
-        cy.get('@firstHero')
-          .find('[data-cy=like]')
-          .click();
+        cy.get('@firstHero').find('[data-cy=like]').click();
         //assert count increased
         cy.get('@fanCount').then((fanCount) => {
           cy.get('@fanSpan').should('have.text', Number(fanCount) + 1);
@@ -142,9 +140,7 @@ describe('home page', () => {
             cy.wrap(el.text()).as('saveCount');
           });
         //click hire button
-        cy.get('@firstHero')
-          .find('[data-cy=money]')
-          .click();
+        cy.get('@firstHero').find('[data-cy=money]').click();
         //click yes in modal
         cy.get('button').contains('Yes').click();
         //assert count increased
@@ -175,9 +171,7 @@ describe('home page', () => {
               .invoke('text')
               .then((text) => cy.wrap(text).as('heroName'));
           });
-        cy.get('@firstHero')
-          .find('[data-cy=trash]')
-          .click();
+        cy.get('@firstHero').find('[data-cy=trash]').click();
         cy.contains('Delete Hero?');
         //click no
         cy.get('button').contains('Yes').click();

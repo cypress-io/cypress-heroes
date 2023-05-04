@@ -1,4 +1,4 @@
-import { Prisma } from '../support/models';
+import Prisma from '@prisma/client';
 
 describe('hero edit page', () => {
   beforeEach(() => {
