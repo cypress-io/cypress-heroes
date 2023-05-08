@@ -1,6 +1,6 @@
 name: Cypress Tests
 
-on: [push]
+on: push
 
 env:
   VITE_API_URL: http://localhost:3001
@@ -8,35 +8,79 @@ env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
-  build-and-run-tests:
+  install:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Install dependencies & Build
-        uses: cypress-io/github-action@v5.0.5
+      - name: Cypress install
+        uses: cypress-io/github-action@v5
         with:
-          # just build and perform install
-          build: npm run build
           runTests: false
-      - name: CT Tests
-        uses: cypress-io/github-action@v5.0.5 # use the explicit version number
+          build: npm run build
+      - name: Save build folder
+        uses: actions/upload-artifact@v3
         with:
-          install: false
-          command: npm run test:ct:ci
-          record: true
-      - name: Start Client & Server
-        run: npm run start:ci &
-      - name: E2E Tests
-        uses: cypress-io/github-action@v5.0.5 # use the explicit version number
+          name: build-folders
+          if-no-files-found: error
+          path: |
+            client/dist
+            server/dist  
+  end-to-end-tests:
+    runs-on: ubuntu-latest
+    needs: install
+    strategy:
+      fail-fast: false
+      matrix:
+        containers: [1, 2, 3, 4, 5, 6]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Download the build folders
+        uses: actions/download-artifact@v3
         with:
-          install: false
+          name: build-folders
+      - name: Run E2E Tests
+        uses: cypress-io/github-action@v5
+        with:
+          start: npm run start:ci
+          wait-on: 'http://localhost:3000, http://localhost:3001/heroes'
           command: npm run test:e2e:ci
-          record: true
-          wait-on: 'http://localhost:3000, http://localhost:3001/heroes'      
-      - name: API Tests
-        uses: cypress-io/github-action@v5.0.5 # use the explicit version number
+  component-tests:
+    runs-on: ubuntu-latest
+    needs: install
+    strategy:
+      fail-fast: false
+      matrix:
+        containers: [1, 2, 3, 4, 5, 6]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Download the build folders
+        uses: actions/download-artifact@v3
         with:
-          install: false
+          name: build-folders
+      - name: Run CT Tests
+        uses: cypress-io/github-action@v5
+        with:
+          command: npm run test:ct:ci
+  api-tests:
+    runs-on: ubuntu-latest
+    needs: install
+    strategy:
+      fail-fast: false
+      matrix:
+        containers: [1, 2, 3, 4, 5, 6]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Download the build folders
+        uses: actions/download-artifact@v3
+        with:
+          name: build-folders
+      - name: Run API Tests
+        uses: cypress-io/github-action@v5
+        with:
+          start: npm run start:ci
+          wait-on: 'http://localhost:3000, http://localhost:3001/heroes'
           command: npm run test:api:ci
-          wait-on: 'http://localhost:3001/heroes'

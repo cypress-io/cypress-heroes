@@ -1,14 +1,15 @@
 {
-  "name": "client-react",
+  "name": "client",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "rimraf dist",
     "build": "tsc && vite build",
-    "preview": "vite preview",
-    "test:e2e:ci": "npx cypress run --record",
-    "test:ct:ci": "npx cypress run --component --record"
+    "preview": "vite preview --host",
+    "test:e2e:ci": "npx cypress run --record --group e2e --parallel",
+    "test:ct:ci": "npx cypress run --component --record --group ct --parallel"
   },
   "dependencies": {
     "@tanstack/react-query": "^4.22.0",
@@ -23,7 +24,7 @@
     "@types/react-dom": "^18.0.9",
     "@vitejs/plugin-react": "^3.0.0",
     "autoprefixer": "^10.4.13",
-    "cypress": "^12.9.0",
+    "cypress": "^12.11.0",
     "postcss": "^8.4.21",
     "sass": "^1.57.1",
     "tailwindcss": "^3.2.4",

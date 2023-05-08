@@ -36,7 +36,7 @@
 //   }
 // }
 
-import { Prisma } from './models';
+import Prisma from '@prisma/client';
 
 declare global {
   namespace Cypress {
