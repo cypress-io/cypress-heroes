@@ -1,6 +1,7 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { CyHeroesContext } from '../components/CyHeroesProvider';
 import { User } from '../models';
+import { API_URL } from '../utils/constants';
 
 interface AuthResult {
   access_token?: string;
@@ -9,7 +10,7 @@ interface AuthResult {
 }
 
 const authResultKey = 'auth_result';
-const baseUrl = import.meta.env.VITE_API_URL;
+const baseUrl = API_URL
 
 export function useAuth() {
   const context = useContext(CyHeroesContext);

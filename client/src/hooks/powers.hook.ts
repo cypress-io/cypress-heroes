@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import { Power } from '../models';
+import { API_URL } from '../utils/constants';
 
-const baseUrl = import.meta.env.VITE_API_URL;
+const baseUrl = API_URL;
 
 export function usePowers() {
-
   const getPowers = () =>
     useQuery<Power[]>({
       queryKey: ['powers'],

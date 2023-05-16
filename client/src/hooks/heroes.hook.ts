@@ -1,8 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Hero, HeroEditModel } from '../models';
 import { useAuth } from './auth.hook';
+import { API_URL } from '../utils/constants';
 
-const baseUrl = import.meta.env.VITE_API_URL;
+const baseUrl = API_URL;
 
 export function useHeroes() {
   const { getAccessToken } = useAuth();
