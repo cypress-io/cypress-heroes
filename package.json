@@ -9,6 +9,9 @@
   ],
   "scripts": {
     "build": "npm --prefix ./client run build && npm --prefix ./server run build",
+    "setup": "npm run resetdb",
+    "resetdb": "npm --prefix ./server run prisma:resetdb",
+    "dev": "concurrently \"npm --prefix ./client run dev\" \"npm --prefix ./server run start:dev\"",
     "start:ci": "concurrently \"npm --prefix ./client run preview\" \"npm --prefix ./server run start:ci\"",
     "test:e2e:ci": "npm --prefix ./client run test:e2e:ci",
     "test:api:ci": "npm --prefix ./server run test:api:ci",
