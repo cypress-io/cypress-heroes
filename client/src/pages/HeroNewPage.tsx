@@ -17,10 +17,10 @@ const HeroNewPage: React.FC<HeroNewPageProps> = () => {
     return <div>Loading...</div>;
   }
 
-  const handleCreateHero = (hero: HeroEditModel, avatarFile?: File) => {
-     createHero(hero, avatarFile).then(() => {
-       nav('/');
-     });
+  const handleCreateHero = (hero: HeroEditModel, avatar?: File) => {
+    createHero.mutateAsync({ hero, avatar }).then(() => {
+      nav('/');
+    });
   };
 
   return (

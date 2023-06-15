@@ -17,7 +17,7 @@ export function useAuth() {
   const [authError, setAuthError] = useState<string>();
 
   useEffect(() => {
-    const authResult = getAuthResult();
+    const authResult = getAuthResultFromLocalStorage();
     if (isSessionValid(authResult)) {
       context.setUser(authResult.user);
     }
@@ -40,7 +40,7 @@ export function useAuth() {
           return;
         }
         const authResult = (await response.json()) as AuthResult;
-        setAuthResult(authResult);
+        saveAuthResultToLocalStorage(authResult);
         context.setUser(authResult.user);
       } catch {
         setAuthError('Unknown error');
@@ -55,7 +55,7 @@ export function useAuth() {
   }, [context]);
 
   const getAccessToken = () => {
-    const authResult = getAuthResult();
+    const authResult = getAuthResultFromLocalStorage();
     return authResult.access_token;
   }
 
@@ -80,13 +80,13 @@ function isSessionValid(authResult: AuthResult) {
   return false;
 }
 
-function getAuthResult() {
+function getAuthResultFromLocalStorage() {
   const authResult = JSON.parse(
     localStorage.getItem(authResultKey) || `{"expiresAt": 0}`
   ) as AuthResult;
   return authResult;
 }
 
-function setAuthResult(authResult: AuthResult) {
+function saveAuthResultToLocalStorage(authResult: AuthResult) {
   localStorage.setItem(authResultKey, JSON.stringify(authResult));
 }

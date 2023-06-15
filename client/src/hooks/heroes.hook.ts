@@ -35,7 +35,7 @@ export function useHeroes() {
       },
     });
 
-  const createMutation = useMutation({
+  const createHero = useMutation({
     mutationFn: async ({
       hero,
       avatar,
@@ -48,19 +48,24 @@ export function useHeroes() {
         headers: authHeaders,
         body: JSON.stringify(hero),
       });
-      const data = await response.json();
-      if (avatar) {
-        const formData = new FormData();
-        formData.append('avatar', avatar);
-        await fetch(`${baseUrl}/heroes/${data.id}/avatar`, {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-          body: formData,
-        });
+      if (response.ok) {
+        const data = await response.json();
+        if (avatar) {
+          const formData = new FormData();
+          formData.append('avatar', avatar);
+          await fetch(`${baseUrl}/heroes/${data.id}/avatar`, {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+            body: formData,
+          });
+        }
+        return data;
+      } else {
+        const error = await response.json();
+        throw new Error(error.message || 'Unknown error occurred');
       }
-      return data;
     },
     onSuccess: (data: Hero) => {
       const heroes = queryClient.getQueryData<Hero[]>(['heroes']) || [];
@@ -69,11 +74,7 @@ export function useHeroes() {
     },
   });
 
-  const createHero = (hero: HeroEditModel, avatar?: File) => {
-    return createMutation.mutateAsync({ hero, avatar });
-  };
-
-  const updateMutation = useMutation({
+  const updateHero = useMutation({
     mutationFn: async ({
       hero,
       avatar,
@@ -86,19 +87,24 @@ export function useHeroes() {
         headers: authHeaders,
         body: JSON.stringify(hero),
       });
-      const data = await response.json();
-      if (avatar) {
-        const formData = new FormData();
-        formData.append('avatar', avatar);
-        await fetch(`${baseUrl}/heroes/${hero.id}/avatar`, {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-          body: formData,
-        });
+      if (response.ok) {
+        const data = await response.json();
+        if (avatar) {
+          const formData = new FormData();
+          formData.append('avatar', avatar);
+          await fetch(`${baseUrl}/heroes/${hero.id}/avatar`, {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+            body: formData,
+          });
+        }
+        return data;
+      } else {
+        const error = await response.json();
+        throw new Error(error.message || 'Unknown error occurred');
       }
-      return data;
     },
     onSuccess: (data: Hero) => {
       const heroes = queryClient.getQueryData<Hero[]>(['heroes']);
@@ -113,10 +119,6 @@ export function useHeroes() {
     },
   });
 
-  const updateHero = (hero: HeroEditModel, avatar?: File) => {
-    return updateMutation.mutateAsync({ hero, avatar });
-  };
-
   const updatePartialMutation = useMutation({
     mutationFn: async (hero: Partial<HeroEditModel>) => {
       const response = await fetch(`${baseUrl}/heroes/${hero.id}`, {
@@ -124,8 +126,13 @@ export function useHeroes() {
         headers: authHeaders,
         body: JSON.stringify(hero),
       });
-      const data = await response.json();
-      return data;
+      if (response.ok) {
+        const data = await response.json();
+        return data;
+      } else {
+        const error = await response.json();
+        throw new Error(error.message || 'Unknown error occurred');
+      }
     },
     onSuccess: (data: Hero) => {
       const heroes = queryClient.getQueryData<Hero[]>(['heroes']);
