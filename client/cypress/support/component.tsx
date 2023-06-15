@@ -23,7 +23,8 @@ import '../../src/styles.scss';
 
 import { mount } from 'cypress/react18';
 import CyHerosProvider from '../../src/components/CyHeroesProvider';
-import React from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { RouteObject, RouterProvider, createMemoryRouter } from 'react-router';
 
 // Augment the Cypress namespace to include type definitions for
 // your custom command.
@@ -33,14 +34,42 @@ declare global {
   namespace Cypress {
     interface Chainable {
       mount: typeof mount;
+      mountWithRouter: typeof mountWithRouter;
     }
   }
 }
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: { refetchOnWindowFocus: false },
+  },
+});
+
 Cypress.Commands.add('mount', (jsx, options) => {
-  const wrapped = <CyHerosProvider>{jsx}</CyHerosProvider>;
+  const wrapped = (
+    <CyHerosProvider>
+      <QueryClientProvider client={queryClient}>{jsx}</QueryClientProvider>
+    </CyHerosProvider>
+  );
   mount(wrapped);
 });
+
+Cypress.Commands.add('mountWithRouter', mountWithRouter);
+
+function mountWithRouter(jsx: React.ReactNode = null, routes: RouteObject[] | string, initialPath: string) {
+  let routesToUse: RouteObject[] = [];  
+  if (typeof routes === 'string') {   
+    routesToUse.push({
+      path: routes,
+      element: jsx
+    })
+  } else {
+    routesToUse = routes
+  }
+  const router = createMemoryRouter(routesToUse, { initialEntries: [initialPath] });
+  cy.stub(router, 'navigate').as('navigateSpy');
+  cy.mount(<RouterProvider router={router} />);
+}
 
 // Example use:
 // cy.mount(<MyComponent />)
