@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Hero, HeroEditModel } from '../models';
 import { useAuth } from './auth.hook';

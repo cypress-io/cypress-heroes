@@ -21,6 +21,7 @@ export function useAuth() {
     if (isSessionValid(authResult)) {
       context.setUser(authResult.user);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const login = useCallback(

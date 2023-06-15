@@ -26,7 +26,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
     if (user) {
       onLogin();
     }
-  }, [user]);
+  }, [user, onLogin]);
 
   const handleSubmit = handleReactHookFormSubmit(({ email, password }) => {
     login(email, password);

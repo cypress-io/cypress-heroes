@@ -42,7 +42,7 @@ const HeroForm: React.FC<HeroFormProps> = ({ hero, powers, onSave }) => {
   });
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newFile = event.target.files![0];
+    const newFile = event.target.files && event.target.files[0];
     if (newFile) {
       setFile(newFile);
       const reader = new FileReader();

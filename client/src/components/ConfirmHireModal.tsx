@@ -1,5 +1,4 @@
 import React from 'react';
-import { useModal } from '../hooks/modal.hook';
 import { Hero } from '../models';
 import { Avatar } from './Avatar';
 import { Button } from './Button';
