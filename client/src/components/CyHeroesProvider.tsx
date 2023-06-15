@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { User } from '../models';
+import Modal from './Modal';
 
 interface ModalContext {
   modal?: React.ReactNode;
   setModal: (modal: React.ReactNode) => void;
   user?: User;
   setUser: (user?: User) => void;
-  // authError?: string;
-  // setAuthError: (error?: string) => void;
 }
 
 export const CyHeroesContext = React.createContext<ModalContext>({} as any);
@@ -22,6 +21,11 @@ const CyHerosProvider: React.FC<CyHeroesProviderProps> = ({ children }) => {
   return (
     <CyHeroesContext.Provider value={{ modal, setModal, user, setUser }}>
       {children}
+      <Modal
+        component={modal}
+        open={!!modal}
+        onClose={() => setModal(undefined)}
+      />
     </CyHeroesContext.Provider>
   );
 };
