@@ -1,4 +1,4 @@
-import { Route, Routes, Link, Navigate } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import Layout from '../layout/Layout';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import HeroesListPage from '../pages/HeroesListPage';

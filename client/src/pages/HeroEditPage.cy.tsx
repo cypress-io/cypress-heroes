@@ -1,3 +1,4 @@
+import { SinonSpy } from 'cypress/types/sinon';
 import HeroEditPage from './HeroEditPage';
 
 describe('HeroEditPage', () => {
@@ -36,7 +37,7 @@ describe('HeroEditPage', () => {
   it('mounts', () => {
     cy.mountWithRouter(<HeroEditPage />, routePath, initialPath);
     cy.get('button').contains('Submit').click();
-    cy.get('@navigateSpy').should((spy: any) => {
+    cy.get<SinonSpy>('@navigateSpy').should((spy: SinonSpy) => {
       const args = spy.getCall(0).args;
       expect(args[0].pathname).to.equal('/');
     });

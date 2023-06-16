@@ -9,6 +9,7 @@ interface ModalContext {
   setUser: (user?: User) => void;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const CyHeroesContext = React.createContext<ModalContext>({} as any);
 
 interface CyHeroesProviderProps extends React.PropsWithChildren {}

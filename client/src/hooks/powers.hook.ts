@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useQuery } from '@tanstack/react-query';
 import { Power } from '../models';
 import { API_URL } from '../utils/constants';

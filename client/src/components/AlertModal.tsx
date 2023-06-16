@@ -1,5 +1,4 @@
 import React from 'react';
-import { useModal } from '../hooks/modal.hook';
 import { Button } from './Button';
 
 interface AlertModalProps extends React.PropsWithChildren {

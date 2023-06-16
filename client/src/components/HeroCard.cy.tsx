@@ -84,7 +84,7 @@ describe('HeroCard', () => {
     });
 
     it('when normal user is logged in, edit and delete buttons should NOT exist', () => {
-      cy.mount(<HeroCard hero={hero} />);
+      cy.mount(<HeroCard hero={hero} user={user} />);
       cy.get('[data-cy=pencil]').should('not.exist');
       cy.get('[data-cy=trash]').should('not.exist');
     });
