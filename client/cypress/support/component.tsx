@@ -34,41 +34,45 @@ declare global {
   namespace Cypress {
     interface Chainable {
       mount: typeof mount;
-      mountWithRouter: typeof mountWithRouter;
+      mountWithProviders: typeof mountWithProviders;
     }
   }
 }
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: { refetchOnWindowFocus: false },
-  },
-});
+Cypress.Commands.add('mount', mount);
+Cypress.Commands.add('mountWithProviders', mountWithProviders);
 
-Cypress.Commands.add('mount', (jsx, options) => {
+function mountWithProviders(
+  jsx: React.ReactNode,
+  routePath: string,
+  initialPath: string
+) {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: { refetchOnWindowFocus: false },
+    },
+  });
+
+  let routes: RouteObject[] = [
+    {
+      path: routePath,
+      element: jsx,
+    },
+  ];
+
+  const router = createMemoryRouter(routes, {
+    initialEntries: [initialPath],
+  });
+  cy.stub(router, 'navigate').as('navigateSpy');
+
   const wrapped = (
     <CyHerosProvider>
-      <QueryClientProvider client={queryClient}>{jsx}</QueryClientProvider>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
     </CyHerosProvider>
   );
-  mount(wrapped);
-});
-
-Cypress.Commands.add('mountWithRouter', mountWithRouter);
-
-function mountWithRouter(jsx: React.ReactNode = null, routes: RouteObject[] | string, initialPath: string) {
-  let routesToUse: RouteObject[] = [];  
-  if (typeof routes === 'string') {   
-    routesToUse.push({
-      path: routes,
-      element: jsx
-    })
-  } else {
-    routesToUse = routes
-  }
-  const router = createMemoryRouter(routesToUse, { initialEntries: [initialPath] });
-  cy.stub(router, 'navigate').as('navigateSpy');
-  cy.mount(<RouterProvider router={router} />);
+  cy.mount(wrapped);
 }
 
 // Example use:

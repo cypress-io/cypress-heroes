@@ -33,9 +33,14 @@ const HeroEditPage: React.FC<HeroEditPageProps> = () => {
   };
 
   const handleUpdateHero = (hero: HeroEditModel, avatar?: File) => {
-    updateHero.mutateAsync({ hero, avatar }).then(() => {
-      nav('/');
-    });
+    updateHero
+      .mutateAsync({ hero, avatar })
+      .then(() => {
+        nav('/');
+      })
+      .catch(() => {
+        setModal(<div>Something went wrong</div>);
+      });
   };
 
   if (!hero || !powers) {

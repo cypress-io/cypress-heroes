@@ -34,12 +34,20 @@ describe('HeroEditPage', () => {
     );
   });
 
-  it('mounts', () => {
-    cy.mountWithRouter(<HeroEditPage />, routePath, initialPath);
+  it('navigates to the home page when hero is saved', () => {
+    cy.mountWithProviders(<HeroEditPage />, routePath, initialPath);
     cy.get('button').contains('Submit').click();
-    cy.get<SinonSpy>('@navigateSpy').should((spy: SinonSpy) => {
-      const args = spy.getCall(0).args;
-      expect(args[0].pathname).to.equal('/');
+    cy.get<SinonSpy>('@navigateSpy').should('have.been.calledWithMatch', {
+      pathname: '/',
     });
+  });
+
+  it('when there is a server error, show a modal with error message', () => {
+    cy.intercept('PUT', '/heroes/1', {
+      statusCode: 500,
+    });
+    cy.mountWithProviders(<HeroEditPage />, routePath, initialPath);
+    cy.get('button').contains('Submit').click();
+    cy.contains('Something went wrong').should('be.visible');
   });
 });
